@@ -35,7 +35,7 @@ public class HospitalBuilderService {
         //After importing 'com.fasterxml.jackson' using the Canvas tutorial
         //I can now use ObjectMapper to write our object as a JSON string:
         String json = new ObjectMapper().writeValueAsString(hospital);
-        System.out.println(json);
+
         try {
             FileReader.writeToFile(fileName, json);
         } catch (IOException e) {
