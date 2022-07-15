@@ -1,21 +1,50 @@
 package main;
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Queue;
+import java.util.stream.Collectors;
 
 public class Doctor {
     private String name;
     private String specialty;
-    private Queue<Patient> patientsQueue;
+    private List<Patient> patientsList;
+    private int healthPointsPerVisit;
 
-    public Doctor(String name, String specialty) {
+    public Doctor(String name, Specialty specialty) {
         this.name = name;
-        this.specialty = specialty;
-        this.patientsQueue = new ArrayDeque<>();
+        this.specialty = specialty.getSpecialty();
+        this.healthPointsPerVisit= specialty.getHeathPointsPerVisit();
+        this.patientsList = new ArrayList<>();
+    }
+
+    public Doctor (){
+
     }
 
     public void addPatient(Patient patient) {
-        patientsQueue.add(patient);
+        patientsList.add(patient);
+    }
+
+    public void removePatient(Patient patient) {
+        patientsList.remove(patient);
+    }
+
+    public void treatPatient(String patientName){
+        Patient patient=null;
+        for (Patient patientIterated : patientsList){
+            String patientNameIterated = patientIterated.getName();
+            if (patientNameIterated.equals(patientName)){
+                patient = patientIterated;
+                break;
+            }
+        }
+        patient.setHealthPoints(patient.getHealthPoints()+healthPointsPerVisit);
+        if(patient.getHealthPoints()>=100){
+            System.out.println("Patient: " + patient + " has been discharged.");
+            removePatient(patient);
+        }
     }
 
     public String getName() {
@@ -26,17 +55,40 @@ public class Doctor {
         return specialty;
     }
 
-    public Queue<Patient> getPatientsQueue() {
-        return patientsQueue;
+    public List<Patient> getPatientsList() {
+        return patientsList;
+    }
+
+    public List<String> getNameList(){
+        List<String> nameList = getPatientsList().stream().map(patient -> patient.getName()).collect(Collectors.toList());
+        return nameList;
     }
 
     public int getPatientCount() {
-        return this.patientsQueue.size();
+        return this.patientsList.size();
     }
 
-    @Override
-    public String toString() {
-        return "Dr. " + name + " specialty=" + specialty + ". They have the following patients: " + patientsQueue;
+    public void setPatientCount(int count){
+
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setSpecialty(String specialty) {
+        this.specialty = specialty;
+    }
+
+    public void setPatientsList(List<Patient> patientsList) {
+        this.patientsList = patientsList;
+    }
+
+    public int getHealthPointsPerVisit() {
+        return healthPointsPerVisit;
+    }
+
+    public void setHealthPointsPerVisit(int healthPointsPerVisit) {
+        this.healthPointsPerVisit = healthPointsPerVisit;
+    }
 }

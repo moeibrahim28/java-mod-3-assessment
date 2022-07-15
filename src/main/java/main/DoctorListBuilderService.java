@@ -9,7 +9,7 @@ public class DoctorListBuilderService {
 
     public Doctor createDoctor() {
         String name = userInputService.getUserInput("What's the doctor's name?");
-        String specialty = userInputService.getSpecialty();
+        Specialty specialty = userInputService.getSpecialty();
         Doctor doctor = new Doctor(name, specialty);
         return doctor;
     }

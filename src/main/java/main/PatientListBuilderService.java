@@ -9,8 +9,8 @@ public class PatientListBuilderService {
 
     public Patient createPatient() {
         String name = userInputService.getUserInput("What's the patient's name?");
-        String specialty = userInputService.getSpecialty();
-        Patient patient = new Patient(name, specialty);
+        Ailment ailment = userInputService.getAilment();
+        Patient patient = new Patient(name, ailment);
         return patient;
     }
 

@@ -1,16 +1,34 @@
 package main;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class Hospital {
+public class Hospital implements Serializable {
     private Map<String, Set<Doctor>> specialtyToDoctors;
     private String name;
 
     public Hospital(String name) {
         this.specialtyToDoctors = new HashMap<>();
+        this.name = name;
+    }
+
+    public Hospital(String name,Map<String, Set<Doctor>> specialtyToDoctors) {
+        this.specialtyToDoctors = specialtyToDoctors;
+        this.name = name;
+    }
+
+    public Hospital(){
+
+    }
+
+    public void setSpecialtyToDoctors(Map<String, Set<Doctor>> specialtyToDoctors) {
+        this.specialtyToDoctors = specialtyToDoctors;
+    }
+
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -34,7 +52,7 @@ public class Hospital {
         boolean doctorWithSpecialtyFound = this.specialtyToDoctors.containsKey(patient.getSpecialtyNeeded());
         if (doctorWithSpecialtyFound) {
             Set<Doctor> doctorsWithThatSpecialty = specialtyToDoctors.get(patient.getSpecialtyNeeded());
-            Doctor chosenDoctor = findDoctorWithShortestQueue(doctorsWithThatSpecialty);
+            Doctor chosenDoctor = findDoctorWithShortestList(doctorsWithThatSpecialty);
             chosenDoctor.addPatient(patient);
         }
 
@@ -44,7 +62,15 @@ public class Hospital {
 
     }
 
-    private Doctor findDoctorWithShortestQueue(Set<Doctor> doctors) {
+    public Map<String, Set<Doctor>> getSpecialtyToDoctors() {
+        return specialtyToDoctors;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    private Doctor findDoctorWithShortestList(Set<Doctor> doctors) {
         Doctor chosenDoctor = null;
         for (Doctor doctor : doctors) {
             if (chosenDoctor == null) {
@@ -56,9 +82,8 @@ public class Hospital {
         return chosenDoctor;
     }
 
-    @Override
-    public String toString() {
-        return "\nThis is " + name + " hospital: " + ", Specialties=" + specialtyToDoctors + "]";
-    }
+
+
+
 
 }
