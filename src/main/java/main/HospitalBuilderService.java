@@ -97,11 +97,14 @@ public class HospitalBuilderService {
                     hospital.addDoctor(doctor);
                     break;
                 case 3:
+                    //ask for patient they want to treat
                     String patientToBeTreated = userInputService.getUserInput("Which patient would you like to treat?");
                     Collection<Set<Doctor>> doctorsSets = hospital.getSpecialtyToDoctors().values();
+                    //flatten the map to find a doctor with that patient name
                     Optional<Doctor> doctorOptional = doctorsSets.stream().flatMap(doctorSet -> doctorSet.stream()).filter(doc -> doc.getNameList().contains(patientToBeTreated)).findFirst();
                     //.flatMap(patients -> patients.stream()).filter(patientSearch -> patientSearch.getName().equals(patientToBeTreated)).
-                    doctorOptional.ifPresent(doctorToDoctor -> doctorToDoctor.treatPatient(patientToBeTreated));
+                    //check if doctor exists if so treat
+                    doctorOptional.ifPresentOrElse(doctorToDoctor -> doctorToDoctor.treatPatient(patientToBeTreated),() ->System.out.println("No doctors have a patient with that name.")  );
                     break;
                 case 4:
                     runValue = false;

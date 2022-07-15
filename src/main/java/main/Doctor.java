@@ -1,9 +1,6 @@
 package main;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Doctor {
@@ -33,20 +30,39 @@ public class Doctor {
 
     public void treatPatient(String patientName){
         Patient patient=null;
+
+        //find patient with patientName
         for (Patient patientIterated : patientsList){
             String patientNameIterated = patientIterated.getName();
             if (patientNameIterated.equals(patientName)){
                 patient = patientIterated;
                 break;
             }
+
         }
-        patient.setHealthPoints(patient.getHealthPoints()+healthPointsPerVisit);
+
+        //random health added up to doctors threshold
+        int randomMultiplier = randomBetween(healthPointsPerVisit);
+        patient.setHealthPoints(patient.getHealthPoints()+randomMultiplier);
+
+        //ascii art stretch goal
         String asciiBar= asciiArtBar(patient.getHealthPoints());
-        System.out.println(patient.getName()+ " health status "+asciiBar+ " "+patient.getHealthPoints()+ "%" );
+        if(patient.getHealthPoints()>=100) {
+            System.out.println(patient.getName() + " health status " + asciiBar + " 100%");
+        }
+        else {
+            System.out.println(patient.getName() + " health status " + asciiBar + " " + patient.getHealthPoints() + "%");
+        }
+        //if patient reaches 100% health discharge
         if(patient.getHealthPoints()>=100){
             System.out.println("Patient: " + patient.getName() + " has been discharged.");
             removePatient(patient);
         }
+    }
+
+    public int randomBetween(int max) {
+        Random random= new Random();
+        return random.nextInt(max);
     }
 
     public String asciiArtBar(int healthPoints){
