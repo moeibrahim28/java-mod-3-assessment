@@ -41,10 +41,20 @@ public class Doctor {
             }
         }
         patient.setHealthPoints(patient.getHealthPoints()+healthPointsPerVisit);
+        String asciiBar= asciiArtBar(patient.getHealthPoints());
+        System.out.println(patient.getName()+ " health status "+asciiBar+ " "+patient.getHealthPoints()+ "%" );
         if(patient.getHealthPoints()>=100){
-            System.out.println("Patient: " + patient + " has been discharged.");
+            System.out.println("Patient: " + patient.getName() + " has been discharged.");
             removePatient(patient);
         }
+    }
+
+    public String asciiArtBar(int healthPoints){
+        String healthBar="";
+        for(int i=0;i<healthPoints/10;i++){
+            healthBar+="=";
+        }
+        return healthBar;
     }
 
     public String getName() {
