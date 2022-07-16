@@ -3,8 +3,8 @@ package main;
 import java.util.Scanner;
 
 class ScannerUserInputService implements UserInputService {
-    private Scanner scanner;
-    private UserOutputService userOutputService;
+    private final Scanner scanner;
+    private final UserOutputService userOutputService;
 
     public ScannerUserInputService(UserOutputService userOutputService) {
         this.scanner = new Scanner(System.in);
@@ -31,8 +31,7 @@ class ScannerUserInputService implements UserInputService {
             return getUserInputInt(prompt);
         }
     }
-    
-    
+
 
     @Override
     public void close() throws Exception {
@@ -42,20 +41,27 @@ class ScannerUserInputService implements UserInputService {
 
     @Override
     public Specialty getSpecialty() {
-        Specialty specialty=null;
-        int input=getUserInputInt("Pick a specialty from below: \n1. Pediatrics\n2. Oncology\n3. Dermatology\n4. Pulmonology");
-        switch(input){
-            case 1: specialty=new Specialty("Pediatrics", 10);
-            break;
-            case 2: specialty=new Specialty("Oncology", 5);
-            break;
-            case 3: specialty= new Specialty("Dermatology", 20);
-            break;
-            case 4: specialty= new Specialty("Pulmonology", 20);
-            break;
+        Specialty specialty = null;
+        int input = getUserInputInt("Pick a specialty from below: \n1. Pediatrics\n2. Oncology\n3. Dermatology\n4. Pulmonology\n5. Allergies");
+        switch (input) {
+            case 1:
+                specialty = new Specialty("Pediatrics", 10);
+                break;
+            case 2:
+                specialty = new Specialty("Oncology", 5);
+                break;
+            case 3:
+                specialty = new Specialty("Dermatology", 20);
+                break;
+            case 4:
+                specialty = new Specialty("Pulmonology", 20);
+                break;
+            case 5:
+                specialty = new Specialty("Allergies", 0);
+                break;
             default:
-            System.out.println("Invalid input. Choose one of the specialties listed:");
-            getSpecialty();
+                System.out.println("Invalid input. Choose one of the specialties listed:");
+                getSpecialty();
         }
         return specialty;
     }
@@ -63,15 +69,22 @@ class ScannerUserInputService implements UserInputService {
     @Override
     public Ailment getAilment() {
         Ailment ailment = null;
-        int input=getUserInputInt("Pick a specialty from below: \n1. Cold\n2. Cancer\n3. Shingles\n4. Shortness of breath");
-        switch(input){
-            case 1: ailment= new Ailment(70, "Cold", "Pediatrics");
+        int input = getUserInputInt("Pick a ailment from below: \n1. Cold\n2. Cancer\n3. Shingles\n4. Shortness of breath\n5. Allergies");
+        switch (input) {
+            case 1:
+                ailment = new Ailment(70, "Cold", "Pediatrics");
                 break;
-            case 2: ailment=new Ailment(20, "Cancer", "Oncology");
+            case 2:
+                ailment = new Ailment(20, "Cancer", "Oncology");
                 break;
-            case 3: ailment= new Ailment(60,"Shingles", "Dermatology");
+            case 3:
+                ailment = new Ailment(60, "Shingles", "Dermatology");
                 break;
-            case 4: ailment= new Ailment(80,"Shortness of breath", "Pulmonology");
+            case 4:
+                ailment = new Ailment(80, "Shortness of breath", "Pulmonology");
+                break;
+            case 5:
+                ailment = new Ailment(95, "Allergies", "Allergies");
                 break;
             default:
                 System.out.println("Invalid input. Choose one of the ailments listed:");

@@ -42,8 +42,10 @@ public class Doctor {
         }
 
         //random health added up to doctors threshold
+        if(healthPointsPerVisit!=0){
         int randomMultiplier = randomBetween(healthPointsPerVisit);
-        patient.setHealthPoints(patient.getHealthPoints()+randomMultiplier);
+        patient.setHealthPoints(patient.getHealthPoints()+randomMultiplier);}
+
 
         //ascii art stretch goal
         String asciiBar= asciiArtBar(patient.getHealthPoints());
