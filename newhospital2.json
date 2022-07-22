@@ -1,0 +1,1 @@
+{"specialtyToDoctors":{"Pediatrics":[{"name":"doc1","specialty":"Pediatrics","patientsList":[{"name":"pat1","specialtyNeeded":"Pediatrics","healthPoints":70,"ailment":null}],"healthPointsPerVisit":10,"nameList":["pat1"],"patientCount":1},{"name":"doc2","specialty":"Pediatrics","patientsList":[],"healthPointsPerVisit":10,"nameList":[],"patientCount":0}]},"name":"hospital2"}

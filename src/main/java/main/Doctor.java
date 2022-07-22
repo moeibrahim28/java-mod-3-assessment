@@ -119,4 +119,14 @@ public class Doctor {
     public void setHealthPointsPerVisit(int healthPointsPerVisit) {
         this.healthPointsPerVisit = healthPointsPerVisit;
     }
+
+    @Override
+    public String toString() {
+        return "Doctor{" +
+                "name='" + name + '\'' +
+                ", specialty='" + specialty + '\'' +
+                ", patientsList=" + patientsList +
+                ", healthPointsPerVisit=" + healthPointsPerVisit +
+                '}';
+    }
 }

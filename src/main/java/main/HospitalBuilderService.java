@@ -46,7 +46,9 @@ public class HospitalBuilderService {
     public Hospital createHospital() throws JsonProcessingException {
 
         String name = userInputService.getUserInput("What's the hospital name? If one already exists in a json \nfile please enter the file name with the .json extension.");
+
         if (!name.endsWith(".json")) {
+
 
             Hospital hospital = new Hospital(name);
             NUMBER_OF_DOCTORS = userInputService.getUserInputInt("How many doctors does your hospital have?");
@@ -72,10 +74,19 @@ public class HospitalBuilderService {
 
             //read from json file
 
-            Hospital hospital = readHospitalFromJSON(name);
-            manipulateHospital(hospital);
-            writeJson(hospital, name);
-            return hospital;
+
+            try {
+                //read from json file if file exists
+
+                Hospital hospital = readHospitalFromJSON(name);
+                manipulateHospital(hospital);
+                writeJson(hospital, name);
+                return hospital;
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println("Incorrect input. Make sure it is formatted correctly.");
+                return createHospital();
+            }
 
         }
 
@@ -85,7 +96,7 @@ public class HospitalBuilderService {
     private void manipulateHospital(Hospital hospital) {
         boolean runValue = true;
         while (runValue) {
-            int input = userInputService.getUserInputInt("What would you like to do to the hospital: \n1. Add a patient\n2. Add a doctor.\n3. Select a patient to go through a round of treatment\n4. Exit program and save");
+            int input = userInputService.getUserInputInt("What would you like to do to the hospital: \n1. Add a patient\n2. Add a doctor.\n3. Select a patient to go through a round of treatment\n4. Print current hospital\n5. Exit program and save");
 
             switch (input) {
                 case 1:
@@ -101,12 +112,19 @@ public class HospitalBuilderService {
                     String patientToBeTreated = userInputService.getUserInput("Which patient would you like to treat?");
                     Collection<Set<Doctor>> doctorsSets = hospital.getSpecialtyToDoctors().values();
                     //flatten the map to find a doctor with that patient name
-                    Optional<Doctor> doctorOptional = doctorsSets.stream().flatMap(doctorSet -> doctorSet.stream()).filter(doc -> doc.getNameList().contains(patientToBeTreated)).findFirst();
+                    Optional<Doctor> doctorOptional = doctorsSets.stream()
+                            .flatMap(doctorSet -> doctorSet.stream())
+                            .filter(doc -> doc.getNameList()
+                                    .contains(patientToBeTreated))
+                            .findFirst();
                     //.flatMap(patients -> patients.stream()).filter(patientSearch -> patientSearch.getName().equals(patientToBeTreated)).
                     //check if doctor exists if so treat
-                    doctorOptional.ifPresentOrElse(doctorToDoctor -> doctorToDoctor.treatPatient(patientToBeTreated),() ->System.out.println("No doctors have a patient with that name.")  );
+                    doctorOptional.ifPresentOrElse(doctorToDoctor -> doctorToDoctor.treatPatient(patientToBeTreated), () -> System.out.println("No doctors have a patient with that name."));
                     break;
                 case 4:
+                    System.out.println(hospital);
+                    break;
+                case 5:
                     runValue = false;
                     break;
                 default:
@@ -123,7 +141,7 @@ public class HospitalBuilderService {
         // If the File of this file name does not exist, exit program
         if (!new File(fileName).exists()) {
             System.out.println("Can't open file.");
-            return null;
+            throw new IllegalArgumentException();
         }
 
         //Get the contents of the file from our File Reader, made by curriculum.

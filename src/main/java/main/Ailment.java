@@ -39,5 +39,12 @@ public class Ailment {
         return associatedSpecialty;
     }
 
-
+    @Override
+    public String toString() {
+        return "Ailment{" +
+                "startingHealthIndex=" + startingHealthIndex +
+                ", ailmentName='" + ailmentName + '\'' +
+                ", associatedSpecialty='" + associatedSpecialty + '\'' +
+                '}';
+    }
 }

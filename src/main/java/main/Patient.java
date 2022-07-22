@@ -50,7 +50,13 @@ public class Patient {
         return specialtyNeeded;
     }
 
-
-
-
+    @Override
+    public String toString() {
+        return "Patient{" +
+                "name='" + name + '\'' +
+                ", specialtyNeeded='" + specialtyNeeded + '\'' +
+                ", healthPoints=" + healthPoints +
+                ", ailment=" + ailment +
+                '}';
+    }
 }

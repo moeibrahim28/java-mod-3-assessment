@@ -83,7 +83,11 @@ public class Hospital implements Serializable {
     }
 
 
-
-
-
+    @Override
+    public String toString() {
+        return "Hospital{" +
+                "specialtyToDoctors=" + specialtyToDoctors +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

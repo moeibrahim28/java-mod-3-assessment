@@ -28,4 +28,12 @@ public class Specialty {
     public void setHeathPointsPerVisit(int heathPointsPerVisit) {
         this.heathPointsPerVisit = heathPointsPerVisit;
     }
+
+    @Override
+    public String toString() {
+        return "Specialty{" +
+                "specialty='" + specialty + '\'' +
+                ", heathPointsPerVisit=" + heathPointsPerVisit +
+                '}';
+    }
 }
